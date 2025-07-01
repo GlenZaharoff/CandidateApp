@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "CandidateApp",
+    "slug": "candidate-app",
+    "scheme": "workforceapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+  "package": "com.workforcesa.candidateapp",
+  "intentFilters": [
+    {
+      "action": "VIEW",
+      "data": {
+        "scheme": "workforceapp"
+      },
+      "category": ["BROWSABLE", "DEFAULT"]
+    }
+  ]
+},
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
