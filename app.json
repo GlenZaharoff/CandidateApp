@@ -13,24 +13,34 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-  "package": "com.workforcesa.candidateapp",
-  "intentFilters": [
-    {
-      "action": "VIEW",
-      "data": {
-        "scheme": "workforceapp"
-      },
-      "category": ["BROWSABLE", "DEFAULT"]
-    }
-  ]
-},
+      "package": "com.workforcesa.candidateapp",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "workforceapp"
+          },
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c445311f-75f5-44d6-934e-e333037058ba"
+      }
     }
   }
 }

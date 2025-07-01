@@ -76,7 +76,7 @@ router.put('/update', async (req, res) => {
   }
 });
 
-// Forgot password
+// Forgot password (только deep link, без ngrok/redirect)
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
   try {
@@ -91,7 +91,8 @@ router.post('/forgot-password', async (req, res) => {
       [candidateId, token, expiresAt]
     );
 
-const resetLink = `https://a397-62-128-207-107.ngrok-free.app/candidates/redirect-reset?token=${token}`;
+    // ТОЛЬКО DEEP LINK
+    const resetLink = `workforceapp://reset/password?token=${token}`;
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
@@ -107,8 +108,8 @@ const resetLink = `https://a397-62-128-207-107.ngrok-free.app/candidates/redirec
             display: inline-block;
           ">Reset Password</a>
         </p>
-        <p>If the button doesn't work, copy and paste this link into your browser:</p>
-        <p style="word-break: break-all;"><a href="${resetLink}">${resetLink}</a></p>
+        <p>If the button doesn't work, copy and paste this link into your browser or app:</p>
+        <p style="word-break: break-all;">${resetLink}</p>
         <p>This link will expire in 1 hour.</p>
       </div>
     `;
@@ -156,13 +157,6 @@ router.post('/reset-password', async (req, res) => {
   }
 });
 
-// Redirect route for deep linking
-router.get('/redirect-reset', (req, res) => {
-  const { token } = req.query;
-  if (!token) return res.status(400).send('Missing token');
-
-  const deepLink = `workforceapp://reset/password?token=${token}`;
-  res.redirect(deepLink);
-});
+// --- Никаких redirect-reset и ngrok-ссылок больше нет ---
 
 module.exports = router;

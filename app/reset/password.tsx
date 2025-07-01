@@ -14,21 +14,17 @@ export default function ResetPassword() {
   const router = useRouter();
   const { token } = useLocalSearchParams();
 
-  // 🔑 Log token to debug deep link
-  console.log('🔑 ResetPassword screen loaded with token:', token);
-
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleResetPassword = async () => {
-    if (!password || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in both fields');
+    if (!newPassword) {
+      Alert.alert('Ошибка', 'Введите новый пароль');
       return;
     }
 
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+    if (!token) {
+      Alert.alert('Ошибка', 'Отсутствует токен сброса');
       return;
     }
 
@@ -38,20 +34,20 @@ export default function ResetPassword() {
       const response = await fetch(`${API_BASE_URL}/candidates/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, password }),
+        body: JSON.stringify({ token, newPassword }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert('Success', 'Password reset successfully');
+        Alert.alert('Успешно', 'Пароль был обновлён');
         router.replace('/login');
       } else {
-        Alert.alert('Error', data.message || 'Reset failed');
+        Alert.alert('Ошибка', data?.message || 'Сброс не удался');
       }
     } catch (error) {
-      console.error('Reset error:', error);
-      Alert.alert('Error', 'Something went wrong');
+      console.error('Reset password error:', error);
+      Alert.alert('Ошибка', 'Что-то пошло не так');
     } finally {
       setLoading(false);
     }
@@ -59,22 +55,14 @@ export default function ResetPassword() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Set a New Password</Text>
+      <Text style={styles.title}>Сброс пароля</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="New Password"
+        placeholder="Новый пароль"
         secureTextEntry
-        onChangeText={setPassword}
-        value={password}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm New Password"
-        secureTextEntry
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
+        onChangeText={setNewPassword}
+        value={newPassword}
       />
 
       <TouchableOpacity
@@ -83,7 +71,7 @@ export default function ResetPassword() {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? 'Resetting...' : 'Reset Password'}
+          {loading ? 'Сброс...' : 'Сбросить пароль'}
         </Text>
       </TouchableOpacity>
     </View>
